@@ -82,7 +82,11 @@ function update_table_id_field($db, $searchfield, $search, $updatefield)
     mysqli_free_result($result);
 
     if (is_null($results[0])) { // Country not found, then insert
-        $sql = "INSERT INTO tms_statics ({$updatefield},{$searchfield}) VALUES (1,'{$search}')";
+        if (is_numeric($search)) {
+            $sql = "INSERT INTO tms_statics ({$updatefield},{$searchfield}) VALUES (1,{$search})";
+        } else {
+            $sql = "INSERT INTO tms_statics ({$updatefield},{$searchfield}) VALUES (1,'{$search}')";
+        }
         $db->query($sql);
     } else {
         $id = $results[0]["id"];

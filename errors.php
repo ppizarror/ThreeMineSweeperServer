@@ -3,13 +3,12 @@
  * ERRORS
  * Error admin.
  *
- * @package server
  * @author Pablo Pizarro R. @ppizarror.com
  * @license MIT
  */
 
 /**
- * Definición constantes error
+ * Error definitions.
  */
 const APP_ERROR_BAD_QUERY_TYPE = "bad_query_type";
 const APP_ERROR_BAD_SQL = "bad_sql";

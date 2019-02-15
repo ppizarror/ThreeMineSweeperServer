@@ -3,7 +3,6 @@
  * SCORE
  * Score admin.
  *
- * @package server
  * @author Pablo Pizarro R. @ppizarror.com
  * @license MIT
  */
@@ -68,12 +67,11 @@ switch ($method) {
         $gen = sanitize_input($db, urldecode($_GET["g"]));
 
         // Validate data
-        if (!validate_string_size($id, 32, 32)) {
+        if (!validate_string_size($id, 32, 32) ||
+            !validate_number($gen, 0, 100)) {
             throw_error_close_db(APP_ERROR_DATA, $db);
         }
-        if (!validate_string_size($gen, 32, 32)) {
-            throw_error_close_db(APP_ERROR_DATA, $db);
-        }
+        $gen = intval($gen);
 
         // Select data
         $sql = "SELECT country,date,time,user FROM tms_score WHERE gen='{$id}' ORDER BY time ASC LIMIT 10";
@@ -115,22 +113,17 @@ switch ($method) {
             !validate_string_size($user, 4, 20) ||
             !validate_string_size($country, 2, 10) ||
             !validate_string_size($time, 1, 10) ||
-            !is_numeric($time)) {
+            !validate_number($time, 0.0001, 86400) ||
+            !validate_number($gen, 0, 100)) {
             throw_error_close_db(APP_ERROR_DATA, $db);
         }
         $time = floatval($time);
-        if ($time < 0 || $time > 86400) {
-            throw_error_close_db(APP_ERROR_DATA, $db);
-        }
-        if (!validate_string_size($gen, 32, 32)) {
-            throw_error_close_db(APP_ERROR_DATA, $db);
-        }
+        $gen = intval($gen);
 
         // Create date
         try {
             $date = new DateTime();
         } catch (Exception $e) {
-            echo "yay4";
             throw_error_close_db(APP_ERROR_DATA, $db);
         }
         $d = $date->format(SERVER_HOUR_FORMAT);

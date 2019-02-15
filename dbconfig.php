@@ -3,7 +3,6 @@
  * DBCONFIG
  * Main connection class.
  *
- * @package server
  * @author Pablo Pizarro R. @ppizarror.com
  * @license MIT
  */

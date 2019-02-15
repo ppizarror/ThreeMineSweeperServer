@@ -3,7 +3,6 @@
  * UTILS
  * General functions.
  *
- * @package server
  * @author Pablo Pizarro R. @ppizarror.com
  * @license MIT
  */
