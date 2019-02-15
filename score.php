@@ -146,6 +146,28 @@ switch ($method) {
 
     /**
      * ------------------------------------------------------------------------
+     * Download stats
+     * ------------------------------------------------------------------------
+     */
+    case "stats":
+        $sql = "SELECT * FROM tms_statics";
+        $result = $db->query($sql) or die(generate_error_array(APP_ERROR_DIE_QUERY));
+        $newdata = array();
+        while ($row = $result->fetch_assoc()) {
+            $rowdata = [];
+            $rowdata["sid"] = $row["id"];
+            $rowdata["sc"] = $row["scoreboard"];
+            $rowdata["n"] = $row["games"];
+            $rowdata["c"] = $row["country"];
+            $rowdata["g"] = $row["gen"];
+            $newdata[] = $rowdata;
+        }
+        mysqli_free_result($result);
+        echo json_encode($newdata);
+        break;
+
+    /**
+     * ------------------------------------------------------------------------
      * Unknown method
      * ------------------------------------------------------------------------
      */
